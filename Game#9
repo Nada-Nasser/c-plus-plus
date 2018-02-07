@@ -1,0 +1,73 @@
+import random
+x=[]
+size=random.randint(10,20)
+for i in range(1,size+1):
+    x.append(i)
+print(x)
+while True:
+#player1:    
+    while True:
+        z=int(input("Player 1, How many tokens? "))
+        if(z==1):
+            num=int(input("Player 1, Write the number :"))
+            if(num in x):
+                in_num1 = x.index(num)
+                x[in_num1]="_"
+                break
+            else:
+                print("the token not found")
+
+        if(z==2):
+            num=int(input("Player 1, Write the number :"))
+            if((num in x)and(num+1 in x)):
+                in_num1 = x.index(num)
+                x[in_num1]="_"
+                x[in_num1+1]="_"
+                break
+            else:
+                print("The tow tokens not found")
+    print(" ")
+    print(x)
+
+    i=0
+    nT=0
+    while i<=(len(x)-1):
+        if(x[i] != "_"):
+            nT=nT+1
+        i=i+1
+    if(nT<1):
+        print("player 1 win")
+        break
+#player2:
+    while True:
+        z=int(input("Player 2, How many tokens? "))
+        if(z==1):
+            num=int(input("Player 2, Write the number :"))
+            if(num in x):
+                in_num1 = x.index(num)
+                x[in_num1]="_"
+                break
+            else:
+                print("the token not found")
+            
+        if(z==2):
+            num=int(input("Player 2, Write the number :"))
+            if((num in x)and(num+1 in x)):
+                in_num1 = x.index(num)
+                x[in_num1]="_"
+                x[in_num1+1]="_"
+                break
+            else:
+                print("The two tokens not found")
+    print(" ")
+    print(x)
+
+    i=0
+    nT=0
+    while i<=(len(x)-1):
+        if(x[i] != "_"):
+            nT=nT+1
+        i=i+1
+    if(nT<1):
+        print("player 2 win")
+        break
