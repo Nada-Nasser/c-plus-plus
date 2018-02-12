@@ -1,0 +1,138 @@
+/*
+Name: Nada Nasser Al-Said El-Azab
+ID: 20140369  G.14
+Game#9 c++
+Final version
+*/
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main()
+{
+    int z,num1,num2;
+    srand(time(0));
+    const int Size =10+(rand()%10);
+    int x[Size];
+    for (int i=0;i<Size;i++){
+        x[i]=i+1;
+        cout<<x[i]<<" ";
+    } cout<<endl;
+
+//lets play it :D :-
+    while(true){
+    //player1:
+        bool T=true;
+        while (T){
+            cout<<"Player 1, How many tokens? ";cin>>z;
+            if(z==1){
+                cout<<"Player 1, Write the number : ";cin>>num1;
+                for(int i=0;i<Size;i++){
+                    if(x[i]==num1){
+                        x[i]=0;
+                        T=false;
+                        break;
+                    }
+                }
+            }
+            if(z==2){
+                cout<<"Player 1, Write the first number :";cin>>num1;
+                cout<<"Player 1, Write the secound number :";cin>>num2;
+                bool three=false,four=false;
+                for(int i=0;i<Size;i++){
+                    if(x[i]==num1){three=true;}
+                    if(x[i]==num2){four=true;}
+                }
+                if((num1-num2==1 || num2-num1==1)&&(three&&four)){
+                    int j=0;
+                    bool one,two;
+                    for(int i=0;i<Size;i++){
+                        if(x[i]==num1){
+                            x[i]=0;
+                            bool one=true;
+                        }
+                        if(x[j]==num2){
+                            x[j]=0;
+                            bool two=true;
+                        }
+                        j++;}
+                    if(one && two){
+                        T=false;
+                    }
+                }else{cout<<"The Token not found"<<endl;}
+            }
+        }
+        cout<<endl;
+        for (int i=0;i<Size;i++){
+            cout<<x[i]<<" ";
+        }cout<<endl;
+        int i=0,nT=0;
+        while(i<=(Size-1)){
+            if(x[i]>0){
+                nT=nT+1;
+            }
+            i++;
+        }
+        if((nT)<1){
+            cout<<endl<<"Player 1 win";
+            break;
+        }
+
+//player2:
+        T=true;
+        while (T){
+            cout<<"Player 2, How many tokens? ";cin>>z;
+            if(z==1){
+                cout<<"Player 2, Write the number : ";cin>>num1;
+                for(int i=0;i<Size;i++){
+                    if(x[i]==num1){
+                        x[i]=0;
+                        T=false;
+                        break;
+                    }
+                }
+            }
+            if(z==2){
+                cout<<"Player 2, Write the first number :";cin>>num1;
+                cout<<"Player 2, Write the secound number :";cin>>num2;
+                bool three=false,four=false;
+                for(int i=0;i<Size;i++){
+                    if(x[i]==num1){three=true;}
+                    if(x[i]==num2){four=true;}
+                }
+                if((num1-num2==1 || num2-num1==1)&&(three&&four)){
+                    int j=0;
+                    bool one,two;
+                    for(int i=0;i<Size;i++){
+                        if(x[i]==num1){
+                            x[i]=0;
+                            bool one=true;
+                        }
+                        if(x[j]==num2){
+                            x[j]=0;
+                            bool two=true;
+                        }
+                        j++;}
+                    if(one && two){
+                        T=false;
+                    }
+                }else{cout<<"The Token not found"<<endl;}
+            }
+        }
+        cout<<endl;
+        for (int i=0;i<Size;i++){
+            cout<<x[i]<<" ";
+        }cout<<endl;
+        i=0,nT=0;
+        while(i<=(Size-1)){
+            if(x[i]>0){nT=nT+1;}
+            i++;
+        }
+        if((nT)<1){
+            cout<<endl<<"Player 2 win";
+            break;}
+    }
+    return 0;
+}
