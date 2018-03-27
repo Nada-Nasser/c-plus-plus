@@ -1,0 +1,254 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+void starting();
+int new_data_set(char file_name[] ,int Size);
+int load_data_set(char file_name[],int Set[],int Size);
+void Display_data_sets(int Set[],int Size);
+
+void disjoint(int set_A[] , int set_B[],int size_A , int size_B ,char fileA_name[] ,char fileB_name[]);
+void disjoint(int set_A[] , int set_B[],int set_C[] ,int size_A , int size_B , int size_C ,char fileA_name[] ,char fileB_name[],char fileC_name[]);
+void sorting_sets(int set_A[],int Size);
+void is_equal(int set_A[] , int set_B[],int size_A , int size_B , char fileA_name[] ,char fileB_name[]);
+void is_equal(int set_A[] , int set_B[] , int set_C[], int size_A , int size_B ,int size_C ,char fileA_name[] ,char fileB_name[] ,char fileC_name[] );
+void proper_subset(int set_A[] , int set_B[] ,int size_A , int size_B ,char fileA_name[],char fileB_name[]);
+
+int main()
+{
+    int Size_A , Size_B , Size_C ;
+    char fileA_name[200], fileB_name[200],fileC_name[200];
+    int SetA[200],SetB[200] ,SetC[200];
+    while(true){
+        int choice;
+        starting();
+        cin >> choice;
+        if(choice==1){
+            cout << "What's your Sample Size for A :";
+            cin  >> Size_A;
+            cout << "Write a file name to A :";
+            cin  >> fileA_name;
+            new_data_set(fileA_name,Size_A);
+
+            cout << "What's your Sample Size for B :";
+            cin  >> Size_B;
+            cout << "Write a file name to B :";
+            cin  >> fileB_name;
+            new_data_set(fileB_name,Size_B);
+
+            cout << "What's your Sample Size for C : ";
+            cin  >> Size_C;
+            cout << "Write a file name to C :";
+            cin  >> fileC_name;
+            new_data_set(fileC_name,Size_C);
+
+            cout <<endl;
+        }
+        else if(choice==2){
+            cout << "Two data sets are loaded"<<endl;
+            SetA[Size_A];
+            SetB[Size_B];
+            SetC[Size_C];
+            load_data_set( fileA_name, SetA, Size_A);
+            load_data_set( fileB_name, SetB, Size_B);
+            load_data_set( fileC_name, SetC, Size_C);
+            cout <<endl;
+        }
+        else if(choice==3){
+            cout << "\nSet_A : ";
+            Display_data_sets(SetA,Size_A);
+            cout << "Set_B : ";
+            Display_data_sets(SetB,Size_B);
+            cout << "Set_C : ";
+            Display_data_sets(SetC,Size_C);
+            cout <<endl;
+        }
+        else if(choice==10){
+            SetA[Size_A];
+            SetB[Size_B];
+            SetC[Size_C];
+            disjoint(SetA,SetB,SetC,Size_A,Size_B,Size_C,fileA_name,fileB_name,fileC_name);
+            disjoint(SetA,SetB,Size_A,Size_B,fileA_name,fileB_name);
+            disjoint(SetA,SetC,Size_A,Size_C,fileA_name,fileC_name);
+            disjoint(SetB,SetC,Size_B,Size_C,fileB_name,fileC_name);
+            cout << endl;
+        }
+        else if(choice==11){
+            SetA[Size_A];
+            SetB[Size_B];
+            SetC[Size_C];
+            sorting_sets(SetA,Size_A);
+            sorting_sets(SetB,Size_B);
+            sorting_sets(SetC,Size_C);
+            is_equal(SetA ,SetB,Size_A,Size_B,fileA_name,fileB_name);
+            is_equal(SetA ,SetC,Size_A,Size_C,fileA_name,fileC_name);
+            is_equal(SetB ,SetC,Size_B,Size_C,fileB_name,fileC_name);
+            is_equal(SetA,SetB,SetC,Size_A,Size_B,Size_C,fileA_name,fileB_name,fileC_name);
+            cout <<endl;
+        }
+        else if(choice==12){
+            SetA[Size_A];
+            SetB[Size_B];
+            proper_subset(SetA,SetB,Size_A,Size_B,fileA_name,fileB_name);
+            proper_subset(SetB,SetA,Size_B,Size_A,fileB_name,fileA_name);
+            cout <<endl;
+        }
+        else if(choice==13){
+            break;
+        }
+        else{cout <<"Error\n";}
+    }
+    return 0;
+}
+
+void starting()
+{
+    cout << "Ahlan ya user ya habibi :) \n What do you like to do today?\n";
+    cout << "1- Enter a new data set"                        << endl <<
+            "2- Load two data sets"                          << endl <<
+            "3- Display data sets "                          << endl <<
+            "10- Check if A and B are disjoint"              << endl <<
+            "11- Check if A and B are equal"                 << endl <<
+            "12- Check if a set is a proper subset of other" << endl <<
+            "13-end\n";
+}
+int new_data_set(char file_name[] ,int Size)
+{
+    ofstream new_data_file;
+    new_data_file.open(file_name);
+    if(new_data_file.is_open()){
+        int elements;
+        cout << "Write The elements of your Data"<<endl;
+        while (Size>0){
+            cin >> elements;
+            new_data_file << elements << endl;
+            Size--;
+        }
+    }
+    else{cout<<"Error";}
+    return Size;
+}
+int load_data_set(char file_name[],int Set[],int Size)
+{
+    int i=0;
+    ifstream file;
+    file.open(file_name);
+    if(file.is_open()){
+        while (!file.eof() && !file.fail() && Size>0){
+            file >> Set[i++];
+            Size--;
+        }
+    }
+    else{
+        cout << "Error";
+    }
+    return Size;
+}
+void Display_data_sets(int Set[],int Size)
+{
+    int element=0;
+    cout << "[";
+    while (Size>0){
+        cout << Set[element];
+        if(Size != 1){
+            cout << " ,";
+        }
+        Size--;
+        element++;
+    }
+    cout << "]"<<endl;
+}
+
+void disjoint(int set_A[] , int set_B[],int size_A , int size_B ,char fileA_name[] ,char fileB_name[])
+{
+    bool is_disjoint=false;
+    for(int i=0;i<size_A;i++){
+        for(int j=0;j<size_B;j++){
+            if(set_A[i]==set_B[j])
+                is_disjoint=true;}}
+    if(!is_disjoint)
+        cout << fileA_name <<" and "<<fileB_name << " are disjoint " <<endl;
+    else
+        cout << fileA_name <<" and "<<fileB_name << " are not disjoint " <<endl;
+}
+
+void disjoint(int set_A[] , int set_B[],int set_C[] ,int size_A , int size_B , int size_C ,char fileA_name[] ,char fileB_name[],char fileC_name[])
+{
+    bool is_disjoint=false;
+    for(int i=0;i<size_A;i++){
+        for(int j=0;j<size_B;j++){
+            for(int k=0;k<size_C;k++){
+                if(set_A[i]==set_B[j] && set_A[i]==set_C[k] && set_B[j]==set_C[k])
+                    is_disjoint=true;}}}
+    if(!is_disjoint)
+        cout << fileA_name <<" and "<<fileB_name<<" and "<<fileC_name << " are disjoint" <<endl;
+    else
+        cout << fileA_name <<" and "<<fileB_name<<" and "<<fileC_name << " are not disjoint" <<endl;
+}
+
+void sorting_sets(int set_A[],int Size)
+{
+    int t=0;
+    for(int i=0;i<Size;i++){
+        for(int j=0;j<Size;j++){
+            if(set_A[i]>set_A[j]){
+                 t = set_A[i];
+                 set_A[i] = set_A[j];
+                 set_A[j]=t;}}}
+}
+
+void is_equal(int set_A[] , int set_B[] , int set_C[], int size_A , int size_B ,int size_C ,char fileA_name[] ,char fileB_name[] ,char fileC_name[] ) ///Size_A==Size_B ???????????????
+{
+    bool is_equal=true;
+    if(size_A==size_B && size_A==size_C){
+        for(int i=0;i<size_A;i++){
+            if(set_A[i]!=set_B[i] || set_A[i]!=set_C[i] || set_C[i]!=set_B[i] )
+                is_equal=false;
+        }
+        if(is_equal)
+            cout << fileA_name <<" "<< fileB_name <<" "<< fileC_name <<" are equal" <<endl;
+        else
+            cout << fileA_name <<" "<< fileB_name <<" "<< fileC_name <<" are not equal" <<endl;
+        }
+        else
+            cout << fileA_name <<" "<< fileB_name <<" "<< fileC_name <<" are not equal" <<endl;
+}
+
+void is_equal(int set_A[] , int set_B[] , int size_A , int size_B ,char fileA_name[] ,char fileB_name[]) ///Size_A==Size_B ???????????????
+{
+    bool is_equal=true;
+    if(size_A==size_B){
+        for(int i=0;i<size_A;i++){
+            if(set_A[i]!=set_B[i])
+                is_equal=false;
+        }
+        if(is_equal)
+            cout << fileA_name <<" "<< fileB_name << " Sets are equal" <<endl;
+        else
+            cout << fileA_name <<" "<< fileB_name << " Sets are not equal" <<endl;
+        }
+        else
+            cout << fileA_name <<" "<< fileB_name << " Sets are not equal" <<endl;
+}
+
+void proper_subset(int set_A[] , int set_B[] ,int size_A , int size_B ,char fileA_name[],char fileB_name[])   ///Size_A < Size_B ????????????????
+{
+    bool is_subset = true;
+    if(size_A<size_B){
+        for(int i=0;i<size_A;i++){
+            int x=0;
+            for(int j=0;j<size_B;j++){
+                if(set_A[i]==set_B[j])
+                    x++;
+            }
+            if(x<=0)   /// &&  x >= Size_A
+                is_subset=false;
+        }
+        if(is_subset)
+            cout << fileA_name <<" is proper subset of "<< fileB_name <<endl;
+        else
+            cout << fileA_name<< " is not proper subset of "<< fileB_name<<endl;
+    }
+    else
+        cout << fileA_name<< " is not proper subset of "<< fileB_name<<endl;
+}
