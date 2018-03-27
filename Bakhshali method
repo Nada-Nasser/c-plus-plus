@@ -1,0 +1,33 @@
+/// FCI – Programming 1 – 2018 
+/// Program Name: Bakhshali method .cpp
+/// Last Modification Date: 23/2/2018
+/// Purpose: Culculate computes the square root using Bakhshali method
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    double num , d , n, s;
+    cout<<"Ahlan ya user ya habibi :D "<<endl;
+
+    cout<<"write the number you want its square root = ";
+    cin>>num;
+
+    cout<<"write the expected result= ";
+    cin>>n;
+    double temp=n;
+    while(true){
+        d=num-(n*n);
+        n= n + (d/(2.0*n)) - ((d*d)/ ((8.0*n*n*n)+(4.0*n*d)));
+        if(n==temp){
+            break;
+        }
+        else{
+            temp=n;
+        }
+    }
+    cout<<endl<<"The result = "<<(int)n;
+
+    return 0;
+}
