@@ -1,11 +1,20 @@
 #include <iostream>
 #include <fstream>
+#include <cmath>
 using namespace std;
 
 void starting();
-int new_data_set(char file_name[] ,int Size);
+int new_data_set(char file_name[] ,int& Size);
 int load_data_set(char file_name[],int Set[],int Size);
 void Display_data_sets(int Set[],int Size);
+
+void Union(int Set[],int Set2[], int Set3[] , int Size, int Size2,int Size3);
+void Intersection(int Set[], int Set2[],int Set3[], int Size,int Size2, int Size3);
+void SubtractionA(int Set[], int Set2[],int Set3[], int Size,int Size2, int Size3);
+
+void A_minus_B_minus_C(int set_A[] , int set_B[] ,int set_C[],int size_A , int size_B , int size_C ,char fileA_name[],char fileB_name[] , char fileC_name[]);
+void PowerSet(int set_A[], int size_A);
+void Cartesian_product(int set_A[] , int set_B[] ,int set_C[],int size_A , int size_B ,int size_C ,char fileA_name[],char fileB_name[],char fileC_name[]);
 
 void disjoint(int set_A[] , int set_B[],int size_A , int size_B ,char fileA_name[] ,char fileB_name[]);
 void disjoint(int set_A[] , int set_B[],int set_C[] ,int size_A , int size_B , int size_C ,char fileA_name[] ,char fileB_name[],char fileC_name[]);
@@ -13,42 +22,38 @@ void sorting_sets(int set_A[],int Size);
 void is_equal(int set_A[] , int set_B[],int size_A , int size_B , char fileA_name[] ,char fileB_name[]);
 void is_equal(int set_A[] , int set_B[] , int set_C[], int size_A , int size_B ,int size_C ,char fileA_name[] ,char fileB_name[] ,char fileC_name[] );
 void proper_subset(int set_A[] , int set_B[] ,int size_A , int size_B ,char fileA_name[],char fileB_name[]);
+void proper_subset(int set_A[] , int set_B[] ,int set_C[] ,int size_A , int size_B , int size_C ,char fileA_name[],char fileB_name[] ,char fileC_name[]);
 
 int main()
 {
-    int Size_A , Size_B , Size_C ;
+    int Size_A=0 , Size_B=0 , Size_C=0;
     char fileA_name[200], fileB_name[200],fileC_name[200];
     int SetA[200],SetB[200] ,SetC[200];
     while(true){
         int choice;
         starting();
-        cin >> choice;
+        int o=1;
+        if(!cin || cin || o==1){
+            cin >> choice;
+            o--;
+        }
         if(choice==1){
-            cout << "What's your Sample Size for A :";
-            cin  >> Size_A;
-            cout << "Write a file name to A :";
-            cin  >> fileA_name;
+cout << "Write a file name to A :";
+            cin >> fileA_name;
             new_data_set(fileA_name,Size_A);
-
-            cout << "What's your Sample Size for B :";
-            cin  >> Size_B;
             cout << "Write a file name to B :";
-            cin  >> fileB_name;
+            cin >> fileB_name;
             new_data_set(fileB_name,Size_B);
-
-            cout << "What's your Sample Size for C : ";
-            cin  >> Size_C;
             cout << "Write a file name to C :";
-            cin  >> fileC_name;
+            cin >> fileC_name;
             new_data_set(fileC_name,Size_C);
-
+            SetA[Size_A];
+            SetB[Size_B];
+            SetC[Size_C];
             cout <<endl;
         }
         else if(choice==2){
             cout << "Two data sets are loaded"<<endl;
-            SetA[Size_A];
-            SetB[Size_B];
-            SetC[Size_C];
             load_data_set( fileA_name, SetA, Size_A);
             load_data_set( fileB_name, SetB, Size_B);
             load_data_set( fileC_name, SetC, Size_C);
@@ -63,10 +68,31 @@ int main()
             Display_data_sets(SetC,Size_C);
             cout <<endl;
         }
+        else if(choice==4){
+            Union(SetA, SetB, SetC, Size_A, Size_B, Size_C);
+        }
+        else if(choice == 5){
+            Intersection(SetA, SetB, SetC,Size_A, Size_B,Size_C);
+        }
+        else if(choice == 6){
+            SubtractionA(SetA, SetB, SetC ,Size_A, Size_B, Size_C);
+        }
+        else if(choice==7){
+            A_minus_B_minus_C(SetC,SetB,SetA,Size_C ,Size_B ,Size_A ,fileC_name,fileB_name,fileA_name);
+        }
+        else if(choice==8){
+            Cartesian_product(SetA,SetB,SetC,Size_A ,Size_B ,Size_C ,fileA_name,fileB_name,fileC_name);
+        }
+        else if(choice==9){
+            cout << "P(A) = ";
+            PowerSet(SetA,Size_A);
+            cout << "\nP(B) = ";
+            PowerSet(SetB,Size_B);
+            cout << "\nP(C) = ";
+            PowerSet(SetC,Size_C);
+            cout<<endl;
+        }
         else if(choice==10){
-            SetA[Size_A];
-            SetB[Size_B];
-            SetC[Size_C];
             disjoint(SetA,SetB,SetC,Size_A,Size_B,Size_C,fileA_name,fileB_name,fileC_name);
             disjoint(SetA,SetB,Size_A,Size_B,fileA_name,fileB_name);
             disjoint(SetA,SetC,Size_A,Size_C,fileA_name,fileC_name);
@@ -74,9 +100,6 @@ int main()
             cout << endl;
         }
         else if(choice==11){
-            SetA[Size_A];
-            SetB[Size_B];
-            SetC[Size_C];
             sorting_sets(SetA,Size_A);
             sorting_sets(SetB,Size_B);
             sorting_sets(SetC,Size_C);
@@ -87,42 +110,53 @@ int main()
             cout <<endl;
         }
         else if(choice==12){
-            SetA[Size_A];
-            SetB[Size_B];
-            proper_subset(SetA,SetB,Size_A,Size_B,fileA_name,fileB_name);
-            proper_subset(SetB,SetA,Size_B,Size_A,fileB_name,fileA_name);
+            proper_subset(SetA,SetB,SetC,Size_A,Size_B,Size_C,fileA_name,fileB_name,fileC_name);
             cout <<endl;
         }
         else if(choice==13){
             break;
         }
-        else{cout <<"Error\n";}
+        else{cout <<"Wrong choice\n";}
     }
     return 0;
 }
 
 void starting()
 {
-    cout << "Ahlan ya user ya habibi :) \n What do you like to do today?\n";
-    cout << "1- Enter a new data set"                        << endl <<
-            "2- Load two data sets"                          << endl <<
-            "3- Display data sets "                          << endl <<
-            "10- Check if A and B are disjoint"              << endl <<
-            "11- Check if A and B are equal"                 << endl <<
-            "12- Check if a set is a proper subset of other" << endl <<
+    cout << "Ahlan ya user ya 7abibi :) \n What do you like to do today?\n";
+    cout << "1- Enter a new data set\n"
+            "2- Load Three data sets\n"
+            "3- Display data sets\n"
+            "4- Union of A, B and C\n"
+            "5- Intersection of A, B and C\n"
+            "6- A - B - C\n"
+            "7- C - B - A\n"
+            "8- Cartesian product of A , B and C\n"
+            "9- Power set of A , B and C \n"
+            "10- Check if A , B and C are disjoint\n"
+            "11- Check if A , B and are equal\n"
+            "12- Check if a sets is a proper subset of other\n"
             "13-end\n";
 }
-int new_data_set(char file_name[] ,int Size)
+int new_data_set(char file_name[] ,int& Size)
 {
     ofstream new_data_file;
     new_data_file.open(file_name);
     if(new_data_file.is_open()){
         int elements;
-        cout << "Write The elements of your Data"<<endl;
-        while (Size>0){
+        Size=0;
+        cout << "Write The elements of your Data , write any char if you finished your Data"<<endl;
+        while (true){
             cin >> elements;
-            new_data_file << elements << endl;
-            Size--;
+            if(cin){
+                    new_data_file << elements << endl;
+                    Size++;
+                }
+            else{
+                cin.clear();
+                cin.ignore(100,'\n');
+                break;
+            }
         }
     }
     else{cout<<"Error";}
@@ -157,6 +191,124 @@ void Display_data_sets(int Set[],int Size)
         element++;
     }
     cout << "]"<<endl;
+}
+
+void Union(int Set[], int Set2[], int Set3[], int Size,int Size2, int Size3)
+{
+    cout<<"The union is: [";
+    for(int c = 0; c<Size; c++)
+        cout<<Set[c]<<",";
+    for(int a = 0; a<Size2; a++){
+        for (int b = 0; b<Size && b<Size3; b++){
+            if (Set2[a] != Set[b]){
+                if (Set2[a] != Set3[b]){
+                    if ( b == Size-1)
+                        cout<<Set2[a]<<",";
+                }
+                else
+                    break;
+            }
+            else
+                break;
+        }
+    }
+    for(int c = 0; c<Size3; c++){
+        for (int b = 0; b<Size; b++){
+            if (Set3[c] != Set[b]){
+                if ( b == Size-1){
+                    cout<<Set3[c]<<",";
+                }
+            }
+            else
+                break;
+        }
+    }
+    cout<<"]"<<endl;
+}
+void Intersection(int Set[], int Set2[], int Set3[], int Size,int Size2, int Size3)
+{
+    cout<<"The intersection is: {";
+    for(int a = 0; a<Size; a++){
+        for(int b = 0; b<Size2 && b<Size3; b++){
+            if(Set[a] == Set2[b] && Set[a] == Set3[b])
+                cout<<Set[a]<<",";
+        }
+    }
+    cout<<"}"<<endl;
+}
+void SubtractionA(int Set[], int Set2[], int Set3[], int Size,int Size2, int Size3)
+{
+    cout<<"A-B-C = {";
+    for(int a = 0; a<Size; a++){
+        for (int b = 0; b<Size2; b++){
+            if (Set[a] != Set2[b] && Set3[b]){
+                    if ( b == (Size2-1 && Size3-1))
+                        cout<<Set[a]<<",";}
+            else
+                break;
+        }
+    }
+    cout<<"}"<<endl;
+}
+
+void A_minus_B_minus_C(int set_A[] , int set_B[] ,int set_C[],int size_A , int size_B , int size_C ,char fileA_name[],char fileB_name[] , char fileC_name[])
+{
+    bool ex;
+    cout << "A-B-C = {";
+    int size_union=0;
+    int union_BUC[size_union];
+    for(int i=0;i<size_B;i++){
+        union_BUC[i]=set_B[i];
+        size_union++;
+    }
+    int s=size_B;
+    for(int i=0;i<size_C;i++){
+        ex=false;
+        for(int j=0; j<size_B;j++){
+            if(set_C[i]==set_B[j])
+                ex=true;
+        }
+        if(!ex){
+            union_BUC[s++];
+            size_union++;
+        }
+    }
+    for(int i=0;i<size_A;i++){
+        ex=false;
+        for(int j=0;j<size_union;j++){
+            if(set_A[i]==union_BUC[j])
+                ex=true;
+        }
+        if(!ex)
+            cout<<set_A[i]<<",";
+    }
+    cout<<"}"<<endl;
+}
+void Cartesian_product(int set_A[] , int set_B[] ,int set_C[],int size_A , int size_B ,int size_C ,char fileA_name[],char fileB_name[],char fileC_name[])
+{
+    cout<<"}\n\nCartesian product A , B AND C  = {";
+    for(int i=0;i<size_A;i++){
+        for(int j=0;j<size_B;j++){
+            for(int k=0 ; k<size_C ; k++)
+                cout <<"("<<set_A[i]<<","<<set_B[j]<<","<<set_C[k]<<"),";
+        }
+    }
+    cout<<"}\n";
+}
+void PowerSet(int set_A[], int size_A)
+{
+    int nloop = pow(2, size_A);
+    for(int i = 0; i < nloop;i++)
+    {
+        cout<<"{";
+        for( int j = 0; j < size_A; j++)
+        {
+            if(i & (1<<j))
+            cout<< set_A[j]<<" ";
+        }
+        cout << "},";
+    }
+    cout << "}";
 }
 
 void disjoint(int set_A[] , int set_B[],int size_A , int size_B ,char fileA_name[] ,char fileB_name[])
@@ -251,4 +403,15 @@ void proper_subset(int set_A[] , int set_B[] ,int size_A , int size_B ,char file
     }
     else
         cout << fileA_name<< " is not proper subset of "<< fileB_name<<endl;
+}
+
+void proper_subset(int set_A[] , int set_B[] ,int set_C[] ,int size_A , int size_B , int size_C ,char fileA_name[],char fileB_name[] ,char fileC_name[])
+{
+    proper_subset(set_A,set_B,size_A,size_B,fileA_name,fileB_name);
+    proper_subset(set_B,set_A,size_B,size_A,fileB_name,fileA_name);
+    proper_subset(set_A,set_C,size_A,size_C,fileA_name,fileC_name);
+    proper_subset(set_C,set_A,size_C,size_A,fileC_name,fileA_name);
+    proper_subset(set_B,set_C,size_B,size_C,fileB_name,fileC_name);
+    proper_subset(set_C,set_B,size_C,size_B,fileC_name,fileB_name);
+    cout<<endl;
 }
