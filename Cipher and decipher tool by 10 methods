@@ -1,0 +1,546 @@
+/// FCI – Programming 1 – 2018 - Assignment 2
+/// Program Name: Total program.cpp
+/// Last Modification Date: 3/3/2018
+/// Author1 and ID and Group: Nada Nasser Al-Said.....20170369
+/// Teaching Assistant: Eng. xxxxx
+/// Purpose:cipher and decipher texts
+#include <iostream>
+#include <string>
+#include <bitset>
+using namespace std;
+
+int main()
+{
+    int choice,choice2;
+    while (true){
+        cout<<endl<<endl<<"Ahlaan ya user ya habibi :D"<<endl;
+        cout<<"what do you want to do today?? "<<endl;
+        cout<<"1- cipher "<<endl<<"2- decipher "<<endl<<"3- END"<<endl;
+        cin>>choice;
+        ///Cipher :-
+        if(choice==1){
+            cout<<"You can choose which type of cipher you want from this list :"<<endl;
+            cout << "1- Affine Cipher " << endl <<"2- Caesar Cipher " << endl <<"3- Atbash Cipher " << endl <<"4- ROT13 Cipher  " << endl <<"5- Baconian Cipher "<<endl <<"6- Simple Substitution Cipher "<<endl<<"7- Polybius Square Cipher "<<endl<<"8- Morse Code "<<endl<<"9- XOR Cipher "<<endl<<"10- Rail-fence Cipher "<<endl;
+            cin>>choice2;
+            if(choice2==1){
+                string letters[52]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+                int numbers[52] ={   1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10, 11, 12,13 ,14 , 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 2,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,2};
+                string word;
+                cout<<"write the word : ";
+                cin>>word;
+                string new_word[word.size()];
+                for (int i=0; i<word.size(); i++ ){
+                    new_word[i]=word[i];
+                }
+                int x , y=word.size();
+                for (int i=0 ; i<word.size();i++){
+                    for(int j=0;j<52;j++){
+                        if (new_word[i]==letters[j]){
+                            x= numbers[j]-1;
+                            x = ((5*x+8)%26);
+                            cout<< letters[x];}}}
+            }
+            if(choice2==2){
+                string letters[26]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+                string word;
+                cout<<"write the word";
+                cin>>word;
+                string new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                cout<<"write the number of shifts";
+                int nshift;
+                cin>> nshift;
+                int x;
+                for (int i=0;i<word.size();i++){
+                    for (int j=0; j<26; j++){
+                        if(new_word[i]== letters[j]){
+                            x=j-nshift;
+                            if(x<0){
+                                x=26+x;
+                            }
+                            cout<<letters[x];}}}
+            }
+            if(choice2==3){
+                string letters[52]=        {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+                string shifted_letters[52]={"Z","Y","X","W","V","U","T","S","R","Q","P","O","N","M","L","K","J","I","H","G","F","E","D","C","B","A","z","y","x","w","v","u","t","s","r","q","b","o","n","m","l","k","j","i","h","g","f","e","d","c","b","a"};
+                string word;
+                cout<<"write the word you want ";
+                cin>>word;
+                string new_word[word.size()];
+                for(int i=0;i<word.size();i++){
+                    new_word[i] = word[i];
+                }
+                for(int i=0 ; i<word.size() ; i++){
+                    for(int j=0 ; j<52 ; j++){
+                        if(new_word[i]==letters[j]){
+                            cout<<shifted_letters[j];}}}
+            }
+            if(choice2==4){
+                string letters[26]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+                string word;
+                cout<<"write the word : ";
+                cin>>word;
+                string new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                int x;
+                for (int i=0;i<word.size();i++){
+                    if (new_word[i]=="N"){
+                        cout<<"A";}
+                    else{
+                    for (int j=0; j < 26; j++){
+                        if(new_word[i]== letters[j]){
+                            x=j+13;
+                        if(x>26){
+                            x=x-26;
+                        }
+                        cout<<letters[x];}}}}
+            }
+            if(choice2==5){
+                string letters[52]= {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+                int   numbers[52] = {0,1,2,3,4,5,6,7,8,9, 10, 11, 12,13 ,14 , 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+                string word;
+                cout<<"write the word : ";
+                cin>>word;
+                string new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                int x;
+                for(int i=0 ; i<word.size() ; i++){
+                    for(int j=0 ; j<52 ; j++){
+                        if(new_word[i]==letters[j]){
+                            x=numbers[j];
+                            bitset <5> new_x(x);
+                            for(int k=4; k>=0; k--){
+                                if(new_x[k]==1){
+                                    cout<<"b";
+                                }else{cout<<"a";}
+                            }cout<<" ";}}}
+            }
+            if(choice2==6){
+                string letters[26]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+                string cipher_alphabet[26];
+                string key;
+                bool T=true;
+                while (true){
+                    cout<<"write the key in 5  different char : ";
+                    cin>>key;
+                    int Size_key=key.size();
+                    for(int i=0;i<key.size();i++){
+                        for(int j=i+1;j<key.size();j++){
+                            if(key[i]==key[j]){
+                                T=false;
+                            }
+                        }
+                    }
+                    if(T && (Size_key==5)){break;}
+                    cout<<"invalid key"<<endl;
+                }
+                string new_key[key.size()];
+                for (int i=0 ; i<key.size();i++){
+                    new_key[i]=key[i];
+                }
+                string word;
+                cout<<"write the word : ";
+                cin>>word;
+                string new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                bool nT;
+                for(int i=0 ; i<5 ; i++){
+                    cipher_alphabet[i]=key[i];
+                }
+                int i=5;
+                for (int j=0; j<26;j++){
+                    nT=true;
+                    for (int k=0 ; k<key.size(); k++){
+                        if(letters[j]== new_key[k]){
+                            nT=false;
+                        }
+                    }if(nT){
+                        cipher_alphabet[i]=letters[j];
+                        i++;
+                    }
+                    if(i>=26){break;}
+                }
+                for(int i=0 ; i<word.size(); i++){
+                    for( int j=0; j<26; j++){
+                        if (new_word[i]==letters[j]){
+                            cout<<cipher_alphabet[j];}}}
+            }
+            if(choice2==7){
+                string letters[5][5]= {"A","B","C","D","E",
+                                       "F","G","H","I","J",
+                                       "K","L","M","N","O",
+                                       "P","Q","R","S","T",
+                                       "U","V","X","Y","Z" };
+                int keys[5];
+                cout<< "write the keys"<<endl;
+                for(int i=0; i<5 ; i++){
+                    cout<< "write the " <<(i+1)<< " key = ";
+                    cin>>keys[i];
+                }
+                string word;
+                cout<<"write the word : ";
+                cin>>word;
+                string new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                for(int i=0 ; i<word.size();i++){
+                    for(int j=0; j<5;j++){
+                        for(int k=0; k<5 ; k++ ){
+                            if(letters[j][k] == new_word[i]){
+                                cout << keys[j]<<keys[k];}}}}
+            }
+            if(choice2==8){
+                string letters[26]={  "A", "B"  ,  "C" , "D" ,"E", "F"  , "G" , "H"  , "I", "J"  , "K" ,  "L" , "M", "N" , "O" , "P"  , "Q"  , "R" , "S" ,"T", "U" ,  "V" , "W" , "X"  , "Y"  , "Z"  };
+                string cipher [26]={"--.","...-",".-.-","..-",".",".-..",".--","....","..","---.","-.-","..-.","--",".--","---",".--.","-.--",".-.","...","-","-..","-...","--.","-..-","--.-","..--"};
+                string word;
+                cout<<"write the word : ";
+                cin>>word;
+                string new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                for (int i=0 ; i<word.size();i++){
+                    for(int j=0;j<26;j++){
+                        if(new_word[i]==letters[j]){
+                            cout<<cipher[j]<<" ";}}}
+            }
+            if(choice2==9){
+                char key;
+                cout<< "write the key ";
+                cin>>key;
+                int nk = key;
+                bitset <8> new_key(nk);
+                string word;
+                cout<<"write the word : ";
+                cin>>word;
+                char new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                //int x;
+                for(int i=0; i<word.size(); i++){
+                    int x = new_word[i];
+                    char a= (x^key);
+                    cout<<(hex)<<(int)a;}
+            }
+            if(choice2==10){
+                int key,i=1,j,c=1,t=1;
+                string old_word;
+                cout<<"write the key = ";
+                cin>>key;
+                string new_word[key];
+                cout<<"write the sentences you want to chiper : "<<endl;
+                cin>>old_word;
+                j=old_word.size();
+                new_word[0]=new_word[0]+old_word[0];
+
+                bool nT=true;
+                while ((j-1)>=0 && i<old_word.size()){
+                    new_word[c]=new_word[c]+old_word[i];
+                    if(t%(key-1)==0){
+                        if(nT==true){nT=false;}
+                        else{nT=true;}
+                    }
+                    if(nT){c++;}
+                    else{c--;}
+                    i++;
+                    j--;
+                    t++;
+                }
+                cout<<"The result : ";
+                for (int f=0;f<key;f++){
+                    cout<<new_word[f];}
+            }
+        }
+        else if(choice==2){
+            cout<<"You can choose which type of decipher you want from this list :"<<endl;
+            cout << "1- Affine Cipher " << endl <<"2- Caesar Cipher " << endl <<"3- Atbash Cipher " << endl <<"4- ROT13 Cipher  " << endl <<"5- Baconian Cipher "<<endl <<"6- Simple Substitution Cipher "<<endl<<"7- Polybius Square Cipher "<<endl<<"8- Morse Code "<<endl<<"9- XOR Cipher "<<endl<<"10- Rail-fence Cipher "<<endl;
+            int choice3;
+            cin>>choice3;
+            if(choice3==1){
+                string letters[52]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+                int numbers[52] =  {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+                string word;
+                cout<<"write the word : ";
+                cin>>word;
+                string new_word[word.size()];
+                for (int i=0; i<word.size(); i++ ){
+                    new_word[i]=word[i];
+                }
+                int x , y=word.size();
+                for (int i=0 ; i<y;i++){
+                    for(int j=0;j<52;j++){
+                        if (new_word[i]==letters[j]){
+                            x= numbers[j];
+                            x = ((21*(x-8))%26);
+                            if(x>0){cout<< letters[x];}
+                            else{cout<< letters[26+x];}
+                            }}}
+            }
+            if(choice3==2){
+                string letters[26]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+                string word;
+                cout<<"write the word";
+                cin>>word;
+                string new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                cout<<"write the number of shifts";
+                int nshift;
+                cin>> nshift;
+                int x;
+                for (int i=0;i<word.size();i++){
+                    for (int j=0; j<26; j++){
+                        if(new_word[i]== letters[j]){
+                            x=j+nshift;
+                            if(x>=26){
+                                x=x-26;
+                            }
+                            cout<<letters[x];}}}
+            }
+
+            if(choice3==3){
+                string shifted_letters[52]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+                string letters[52]=        {"Z","Y","X","W","V","U","T","S","R","Q","P","O","N","M","L","K","J","I","H","G","F","E","D","C","B","A","z","y","x","w","v","u","t","s","r","q","b","o","n","m","l","k","j","i","h","g","f","e","d","c","b","a"};
+                string word;
+                cout<<"write the word you want ";
+                cin>>word;
+                string new_word[word.size()];
+                for(int i=0;i<word.size();i++){
+                    new_word[i] = word[i];
+                }
+                for(int i=0 ; i<word.size() ; i++){
+                    for(int j=0 ; j<52 ; j++){
+                        if(new_word[i]==letters[j]){
+                            cout<<shifted_letters[j];}}}
+            }
+            if(choice3==4){
+                string letters[26]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+                string word;
+                cout<<"write the word : ";
+                cin>>word;
+                string new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                int x;
+                for (int i=0;i<word.size();i++){
+                    if (new_word[i]=="N"){
+                        cout<<"A";}
+                    else{
+                        for (int j=0; j < 26; j++){
+                            if(new_word[i]== letters[j]){
+                                x=j-13;
+                                if(x<0){
+                                    x=x+26;
+                            }
+                            cout<<letters[x];}}}}
+            }
+            if(choice3==5){
+                string letters[26]= {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+                string cipher[26]={"aaaaa","aaaab","aaaba","aaabb","aabaa","aabab","Aabba","Aabbb","Abaaa","Abaab","Ababa","Ababb","Abbaa","abbab","abbba","abbbb","baaaa","baaab","baaba","baabb","babaa","babab","babba","babbb","bbaaa","bbaab"};
+                string word;
+                while(true){
+                    cout<<"write the word : ";
+                    cin>>word;
+                    if(word.size()%5==0){
+                        break;
+                    }cout<<"invalid word"<<endl;
+                }
+                string new_word[word.size()];
+                for(int i=0; i<word.size() ;i++ ){
+                    new_word[i]=word[i];
+                }
+                string new_word2[word.size()/5];
+                int j=0;
+                for(int i=0;i<word.size();i=i+5){
+                    new_word2[j]=new_word[i]+new_word[i+1]+new_word[i+2]+new_word[i+3]+new_word[i+4];
+                    j++;
+                    if(j>=(word.size()/5)){break;}
+                }
+                for (int i=0 ; i<(word.size()/5);i++){
+                    for(int j=0;j<26;j++){
+                        if(new_word2[i]==cipher[j]){
+                            cout<<letters[j];}}}
+            }
+            if(choice3==6){
+                string letters[26]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+                string cipher_alphabet[26];
+                string key;
+                bool T=true;
+                while (true){
+                    cout<<"write the key in 5  different char : ";
+                    cin>>key;
+                    int Size_key=key.size();
+                    for(int i=0;i<key.size();i++){
+                        for(int j=i+1;j<key.size();j++){
+                            if(key[i]==key[j]){
+                                T=false;
+                            }
+                        }
+                    }
+                    if(T && (Size_key==5)){break;}
+                    cout<<"invalid key"<<endl;
+                }
+                string new_key[key.size()];
+                for (int i=0 ; i<key.size();i++){
+                    new_key[i]=key[i];
+                }
+                string word;
+                cout<<"write the word : ";
+                cin>>word;
+                string new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                bool nT;
+                for(int i=0 ; i<5 ; i++){
+                    cipher_alphabet[i]=key[i];
+                }
+                int i=5;
+                for (int j=0; j<26;j++){
+                    nT=true;
+                    for (int k=0 ; k<key.size(); k++){
+                        if(letters[j]== new_key[k]){
+                            nT=false;
+                        }
+                    }if(nT){
+                        cipher_alphabet[i]=letters[j];
+                        i++;
+                    }
+                    if(i>=26){break;}
+                }
+                for(int i=0 ; i<word.size(); i++){
+                    for( int j=0; j<26; j++){
+                        if (new_word[i]==cipher_alphabet[j]){
+                            cout<<letters[j];}}}
+            }
+            if(choice3==7){
+                string letters[5][5]= { "A","B","C","D","E",
+                                        "F","G","H","I","J",
+                                        "K","L","M","N","O",
+                                        "P","Q","R","S","T",
+                                        "U","V","X","Y","Z" };
+                string keys[5];
+                cout<< "write the keys"<<endl;
+                for(int i=0; i<5 ; i++){
+                    cout<< "write the " <<(i+1)<< " key = ";
+                    cin>>keys[i];
+                }
+                string word;
+                while(true){
+                    cout<<"write the word to decipher it ";
+                    cin>>word;
+                    if(word.size()%2==0){
+                        break;
+                    }
+                    cout<<"wrong word write a new one";
+                }
+                string new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                bool nT=false,T=false;
+                int x=0,y=0,i=0,j;
+                int l=word.size() , k=1;
+                while (i<word.size()){
+                    for(int j=0; j<5;j++){
+                        if(new_word[i]==keys[j]){
+                                x=j;
+                                nT=true;
+                                break;}}
+                    for(int j=0; j<5;j++){
+                        if(new_word[k]==keys[j]){
+                                y=j;
+                                T=true;
+                                break;}}
+                if(T && nT){
+                        cout<<letters[x][y];
+                        l--;
+                    }
+                    i=i+2;
+                    k=k+2;}
+            }
+            if(choice3==8){
+                cout<<"Sorry, it's not valid for now "<<endl;
+            }
+            if(choice3==9){
+                char key;
+                cout<< "write the key ";
+                cin>>key;
+                int nk = key;
+                bitset <8> new_key(nk);
+                string word;
+                cout<<"write the word : ";
+                cin>>word;
+                char new_word[word.size()];
+                for (int i=0 ; i<word.size();i++){
+                    new_word[i]=word[i];
+                }
+                //int x;
+                for(int i=0; i<word.size(); i++){
+                    int x = new_word[i];
+                    char a= (x^key);
+                    cout<<(hex)<<(int)a;}
+            }
+            if(choice3==10){
+                int key,i=1,j,c=1,t=1;
+                string old_word;
+                cout<<"write the key = ";
+                cin>>key;
+                string new_word[key];
+                cout<<"write the sentences you want to chiper : "<<endl;
+                cin>>old_word;
+                j=old_word.size();
+                for(int l=0; l <10 ; l++){
+                        string new_word[key];
+                        i=1,c=1,t=1;
+                        new_word[0] = new_word[0]+old_word[0];
+                        bool nT=true;
+                        while ((j-1)>=0 && i<old_word.size()){
+                            new_word[c]=new_word[c]+old_word[i];
+                            if(t%(key-1)==0){
+                                if(nT==true){nT=false;}
+                                else{nT=true;}
+                            }
+                            if(nT){c++;}
+                            else{c--;}
+                            i++;
+                            j--;
+                            t++;
+                        }
+                        int r=0;
+                        for(int p=0 ; p < key ; p++){
+                            string w = new_word[p];
+                            for(int y=0;y<w.size();y++){
+                                old_word[r] = w[y];
+                                r++;
+                                if(r>old_word.size()){
+                                    break;
+                                    p=1000;
+                                }
+                            }
+                        }
+                        j=old_word.size();
+                        //if (l = (key*2)-2){
+                            cout<<"The result : "<< l << "   ";
+                            for (int f=0;f<key;f++){
+                                cout<<new_word[f];
+                            }cout<<endl;}}
+            }
+        if(choice==3){
+            break;
+        }
+    }
+   return 0;
+}
