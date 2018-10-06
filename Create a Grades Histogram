@@ -1,0 +1,90 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+istream& operator>> (istream& out, vector<int>&); //Take the Grades from the user and store it in a GradeVector.
+
+int buildHistogram(int* , vector<int>); // Store the non repeated grades as a base of the histogram and
+                                        // return size of it.
+
+void showHistogram(int* , int , vector<int>); // Print the frequency of each grade in the histogram.
+
+//----------------------------------------------------
+int main()
+{
+    vector <int> grades;
+    int *Histogram; // Create a Dynamic array to store the Bases of the Histogram
+
+    cin >> grades; // Input the grades form the user and store it in a vector.
+    Histogram = new int [grades.size()];
+
+    int nHis =  buildHistogram(Histogram , grades); // Number of non repeated grades in the gradesVector (Histogram bases) .
+
+    showHistogram(Histogram , nHis , grades);
+
+    delete[] Histogram; // deleting the dynamic array .
+    return 0;
+}
+
+//-------------------------------------------------
+
+istream& operator>> (istream& in, vector<int>& gradeVector) //Take the Grades from the user and store it in a GradeVector.
+{
+    int grade; // Temp variable to store each grade in .
+
+    cout << "Write the grades you want to see its Histogram : "       << endl
+         << "(When you want to stop adding more grades just add -1 )" << endl;
+
+    while(true)
+    {
+        in >> grade; // take the grade form the user .
+        if(grade == -1) // Check if the user finished the grade or still he need to add more grades .
+            break;
+        gradeVector.push_back(grade); // add the grade to the vector
+    }
+
+    sort(gradeVector.begin(),gradeVector.end()); // sorting it will help to build the histogram and printing it.
+
+    return in;
+}
+
+//-------------------------------------------------
+
+int buildHistogram(int* histogram , vector<int> gradeVector) // store the non repeated grades as a base of the histogram
+{                                                            // and return size of it.
+
+    int indx = 1; // To store the size of the histogram .
+    histogram[0] = gradeVector[0]; // Because the grades is sorted so the first grade in GradesVector will be the first
+                                   // base in the histogram .
+
+    for(int i=1;i<gradeVector.size();i++)
+    {
+        if(gradeVector[i] != gradeVector[i-1]) // to be sure that there is no repeated grades (sorting vector helps here) .
+        {
+            histogram[indx] = gradeVector[i];
+            indx++;
+        }
+    }
+
+    return indx; //return the size of the histogram .
+}
+
+//-------------------------------------------------
+
+void showHistogram(int* histogram, int n, vector<int> gradeVector) // print the frequency of each grade in the histogram.
+{
+    cout << "_________________________________" << endl;
+    cout << "\nThe Histogram : \n" << endl;
+
+    for(int i=0;i<n;i++) // n is the number of the grades in the base of the histogram .
+    {
+        cout << "Number of "<< histogram[i] << "'s: "
+             << count(gradeVector.begin(),gradeVector.end(),histogram[i]); // It counts the number of (i.th grade base in
+                                                                           // the histogram) that exist in the gradeVector .
+
+        cout << endl;
+    }
+}
+
